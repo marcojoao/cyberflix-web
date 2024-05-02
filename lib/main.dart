@@ -69,7 +69,7 @@ class _HomeState extends State<Home> {
   bool isInstalling = false;
   ConfigStage currentStage = ConfigStage.stage0;
 
-  // String baseUrl = "https://82d7ae415a21-llama-catalog.baby-beamup.club/";
+  // String baseUrl = "https://cyberflix.elfhosted.com/";
   // String baseUrl = "http://127.0.0.1:8000/";
   String baseUrl = '${window.location.origin}/';
   List<CatalogItem> baseCatalog = [];
@@ -83,7 +83,7 @@ class _HomeState extends State<Home> {
   Map<String, String> catalogLanguages = {"English": "en"};
   String selectedCatalogLanguage = 'en';
   String intro =
-      'Welcome to the Cyberflix Configuration Wizard! This user-friendly tool is designed to assist you in customizing the Cyberflix catalog according to your preferences.';
+      'Welcome to the Cyberflix Configuration Wizard! This user-friendly tool is designed to assist you in customizing the catalog according to your preferences.';
   String sponsor = "";
 
   Future<Map> _loadData() async {
@@ -101,21 +101,21 @@ class _HomeState extends State<Home> {
     }
   }
 
-  Future<String> _regixConfig(String config) async {
-    String url = "${baseUrl}regix_config";
+  // Future<String> _regixConfig(String config) async {
+  //   String url = "${baseUrl}regix_config";
 
-    Map<String, String> data = {'config': config};
-    HttpResponse response = await HttpRequests.post(url, data: data);
+  //   Map<String, String> data = {'config': config};
+  //   HttpResponse response = await HttpRequests.post(url, data: data);
 
-    if (response.statusCode != 200) {
-      throw Exception('Failed to load data');
-    }
-    try {
-      return json.decode(response.content)['id'];
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
+  //   if (response.statusCode != 200) {
+  //     throw Exception('Failed to load data');
+  //   }
+  //   try {
+  //     return json.decode(response.content)['id'];
+  //   } catch (e) {
+  //     throw Exception(e);
+  //   }
+  // }
 
   Future<String> _getTrakitLink() async {
     String url = "${baseUrl}get_trakt_url";
@@ -185,14 +185,14 @@ class _HomeState extends State<Home> {
         .replaceFirst("]", "")
         .replaceAll(" ", "");
 
-    final regixId = await _regixConfig(configString);
+    // final regixId = await _regixConfig(configString);
     var traktToken = "";
     if (traktCode != "") {
       traktToken = await _getTrakitToken(traktCode);
     }
 
     List<List<String>> configurationValue = [
-      ["catalogs", regixId],
+      ["catalogs", configString],
       if (rpdbApikey != "") ["rpgb", rpdbApikey],
       if (traktToken != "") ["trakt", traktToken],
       ["lang", selectedCatalogLanguage]
